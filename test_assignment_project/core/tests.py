@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
+
 class ContactTest(TestCase):
     def setUp(self):
         self.client = Client()
