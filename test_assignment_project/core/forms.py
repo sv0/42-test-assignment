@@ -11,6 +11,15 @@ class ProfileChangeForm(forms.ModelForm):
     email = forms.EmailField(max_length=30)
     date_of_birth = forms.DateField()
 
+    def save(self, *args, **kwargs):
+        cd = self.cleaned_data
+        user = self.instance.user
+        user.first_name = cd['first_name']
+        user.last_name = cd['last_name']
+        user.email = cd['email']
+        user.save()
+        super(ProfileChangeForm, self).save(self, *args, **kwargs)
+
     class Meta:
         model = Profile
         exclude = ('user', )
