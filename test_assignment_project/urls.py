@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^core/', include('test_assignment_project.core.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^core/', include('test_assignment_project.core.urls')),
+
 )
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
