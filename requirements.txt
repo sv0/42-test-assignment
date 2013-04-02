@@ -1,0 +1,4 @@
+Django <= 1.4.2
+django-annoying >= 0.7.6
+South >= 0.7-rc1
+PIL >= 1.1.6

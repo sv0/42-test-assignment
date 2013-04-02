@@ -1,4 +1,6 @@
 *.py[cod]
+*.bak
+*.b
 
 # C extensions
 *.so
@@ -33,3 +35,4 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+.env/
