@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'test_assignment_project.core',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
