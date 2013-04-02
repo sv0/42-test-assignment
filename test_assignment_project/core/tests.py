@@ -55,9 +55,7 @@ class ContactTest(TestCase):
         User.objects.create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
         user = User.objects.get(pk=2)  # get sv user
-        print user
         response = self.client.post(reverse('edit_contacts'), TEST_FORM_DATA)
-        print response
         self.assertEqual(response.status_code, 302)
         response = self.client.get(reverse('home'))
         self.assertContains(response, TEST_FORM_DATA.get('first_name'))
