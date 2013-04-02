@@ -99,6 +99,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'test_assignment_project.core.middleware.SaveRequestMiddleware',
 )
 
 ROOT_URLCONF = 'test_assignment_project.urls'
