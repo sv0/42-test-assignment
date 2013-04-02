@@ -5,7 +5,7 @@
 
 {% block content %}
 
-{% if request.user.is_authenticated %}
+{% if user.is_authenticated %}
     <div class="pull-left">
         <a href="{% url edit_contacts %}">{% trans "Change" %}</a> 
         {# <a href="{% edit_link user.get_profile %}">(admin)</a> #}
@@ -17,10 +17,9 @@
         <p>Name: {{user.first_name}}</p>
         <p>Last name: {{user.last_name}}</p>
         <p>Date of birth: {{user.get_profile.date_of_birth}}</p>
-        <p>
-            Bio:<br />
-            {{user.get_profile.bio}}
-        </p>
+        {% if user.photo %}
+            {{user.photo.url}}
+        {% endif %}
     </div>
     <div class="span6">
         <h6>Contacts</h6>
@@ -28,6 +27,10 @@
         <p>Jabber: {{user.get_profile.jabber}}</p>
         <p>Skype: {{user.get_profile.skype}}</p>
         <p>Other contacts: <pre>{{user.get_profile.other_contacts}}</pre></p>
+        <p>
+            Bio:<br />
+            {{user.get_profile.bio}}
+        </p>
     </div>
 </div>
 {% endblock %}
