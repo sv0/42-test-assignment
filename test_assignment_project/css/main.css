@@ -1,0 +1,13 @@
+body {
+  padding: 20px;
+  background: url(/static/images/body-bg.png);
+}
+
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+
+.errorlist li {
+    color: red;
+}
