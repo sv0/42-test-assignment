@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{user}}'s contacts{% endblock %}
+
+{% block head %}
+    {{form.media}}
+{% endblock %}
+
+{% block content %}
+<div class="row" id="id_form_holder">
+    <form class="form-horizontal" id="id_profile_form" action="" enctype="multipart/form-data" method="POST">
+        {% include "profile/edit_contacts_form.html" %}
+    </form>
+</div>
+{% endblock %}
