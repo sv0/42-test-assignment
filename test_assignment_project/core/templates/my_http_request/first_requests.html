@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>List of the first {{limit}} requests</h2>
+<ul>
+    {% for r in request_list %}
+        <li>{{r}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
