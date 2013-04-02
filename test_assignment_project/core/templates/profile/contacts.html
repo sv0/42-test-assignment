@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{user}}'s contacts{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="span6">
+        <p>Name: {{user.first_name}}</p>
+        <p>Last name: {{user.last_name}}</p>
+        <p>Date of birth: {{user.get_profile.date_of_birth}}</p>
+        <p>
+            Bio:<br />
+            {{user.get_profile.bio}}
+        </p>
+    </div>
+    <div class="span6">
+        <h6>Contacts</h6>
+        <p>Email: {{user.email}}</p>
+        <p>Jabber: {{user.get_profile.jabber}}</p>
+        <p>Skype: {{user.get_profile.skype}}</p>
+        <p>Other contacts: <pre>{{user.get_profile.other_contacts}}</pre></p>
+    </div>
+</div>
+{% endblock %}
