@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="" rel="stylesheet" media="screen">
+    <link href="{{STATIC_URL}}css/main.css" rel="stylesheet" media="screen">
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+<div class="masthead">
+    <ul class="nav nav-pills pull-right">
+        <li><a href="{% url home %}">{% trans "Home" %}</a></li>
+    </ul>
+    <h2 class="muted">42 Coffee Cups Test Assignment</h2>
+</div>
+
+{% block content %}
+The content of the document.
+{% endblock %}
+
+<hr />
+
+
+</body>
+</html>
