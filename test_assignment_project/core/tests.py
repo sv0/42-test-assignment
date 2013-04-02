@@ -22,6 +22,14 @@ class ContactTest(TestCase):
         self.assertContains(response, 'Skype')
         self.assertContains(response, 'Bio')
 
+    def test_context(self):
+        """
+        Tests that response context contains settings.
+        """
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.context['settings'], LazySettings)
+
 
 class MyHttpRequestTest(TestCase):
     def setUp(self):
