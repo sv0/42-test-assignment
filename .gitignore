@@ -39,3 +39,6 @@ nosetests.xml
 
 # Database
 *.sqlit*
+
+# Media
+test_assignment_project/media/
