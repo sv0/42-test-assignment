@@ -13,7 +13,7 @@ test: clean
 run:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) runserver
 
-migrate:
+migrate: syncdb
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) migrate --noinput
 
 syncdb:
