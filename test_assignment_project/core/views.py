@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic.simple import redirect_to
 from annoying.decorators import render_to
 from models import MyHttpRequest
+from forms import ProfileChangeForm
 
 
 @render_to("profile/contacts.html")
