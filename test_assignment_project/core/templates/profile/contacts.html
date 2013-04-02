@@ -17,8 +17,8 @@
         <p>Name: {{user.first_name}}</p>
         <p>Last name: {{user.last_name}}</p>
         <p>Date of birth: {{user.get_profile.date_of_birth}}</p>
-        {% if user.photo %}
-            <img src="{{user.photo.url}}">
+        {% if user.get_profile.photo %}
+            <img src="{{user.get_profile.photo.url}}" class="img-polaroid">
         {% endif %}
     </div>
     <div class="span6">
