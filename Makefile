@@ -24,7 +24,7 @@ collectstatic:
 		collectstatic --noinput
 
 pep8:
-	pep8 --filename=*.py --ignore=W --exclude="manage.py,settings.py" --statistics --repeat $(PROJECT) 
+	pep8 --filename=*.py --ignore=W --exclude="manage.py,settings.py,urls.py,wsgi.py" --statistics --repeat $(PROJECT) 
 
 pylint:
 	pylint $(PROJECT)  --max-public-methods=50 --include-ids=y --ignored-classes=Item.Meta --method-rgx='[a-z_][a-z0-9_]{2,40}$$'
