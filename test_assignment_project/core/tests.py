@@ -5,6 +5,17 @@ from django.template import Template, Context
 from django.test import TestCase, Client
 from random import choice
 from models import MyHttpRequest
+#from management.commands.project_models import get_project_models
+
+TEST_USERNAME = 'fake'
+TEST_PASSWORD = 'fake'
+TEST_EMAIL = 'fake@example.com'
+TEST_FORM_DATA = {
+    'first_name': 'fake',
+    'last_name': u'fake',
+    'date_of_birth': '1961-04-12',
+    'email': u'fake@example.com',
+}
 
 
 class ContactTest(TestCase):
@@ -29,6 +40,28 @@ class ContactTest(TestCase):
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['settings'], LazySettings)
+
+    def test_get_contacts_form_anon(self):
+        response = self.client.get(reverse('edit_contacts'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_get_contacts_form_auth(self):
+        User.objects.create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+        response = self.client.get(reverse('edit_contacts'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_contacts_form_auth(self):
+        User.objects.create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+        user = User.objects.get(pk=2)  # get sv user
+        print user
+        response = self.client.post(reverse('edit_contacts'), TEST_FORM_DATA)
+        print response
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('home'))
+        self.assertContains(response, TEST_FORM_DATA.get('first_name'))
+        self.assertContains(response, TEST_FORM_DATA.get('last_name'))
 
 
 class MyHttpRequestTest(TestCase):
