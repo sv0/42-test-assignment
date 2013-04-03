@@ -51,15 +51,20 @@ class ContactTest(TestCase):
         response = self.client.get(reverse('edit_contacts'))
         self.assertEqual(response.status_code, 200)
 
-    def test_post_contacts_form_auth(self):
+    def test_post_contacts_form_auth(self, **kwargs):
         User.objects.create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
         user = User.objects.get(pk=2)  # get sv user
-        response = self.client.post(reverse('edit_contacts'), TEST_FORM_DATA)
-        self.assertEqual(response.status_code, 302)
+        requested_with = 'XMLHttpRequest' if kwargs.get('is_ajax') else ''
+        response = self.client.post(reverse('edit_contacts'), TEST_FORM_DATA,
+                                    HTTP_X_REQUESTED_WITH=requested_with)
+        self.assertIn(response.status_code, (200, 302))
         response = self.client.get(reverse('home'))
         self.assertContains(response, TEST_FORM_DATA.get('first_name'))
         self.assertContains(response, TEST_FORM_DATA.get('last_name'))
+
+    def test_ajax_contacts_form_auth(self):
+        self.test_post_contacts_form_auth(is_ajax=True)
 
 
 class MyHttpRequestTest(TestCase):
