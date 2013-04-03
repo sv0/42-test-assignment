@@ -5,7 +5,7 @@ from django.template import Template, Context
 from django.test import TestCase, Client
 from random import choice
 from models import MyHttpRequest
-#from management.commands.project_models import get_project_models
+from management.commands.project_models import get_project_models
 
 TEST_USERNAME = 'fake'
 TEST_PASSWORD = 'fake'
@@ -99,3 +99,6 @@ class TemplateTagTest(TestCase):
         self.assertIn('/auth/user/%s/' % user.id, t.render(c))
 
 
+class TestProjectModelsCount(TestCase):
+    def test_get_project_models(self):
+        self.assertIsNot(list(get_project_models()), [])
