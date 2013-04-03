@@ -87,3 +87,15 @@ class MyHttpRequestTest(TestCase):
         response = self.client.get(reverse('first_requests'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'List of the first')
+
+
+class TemplateTagTest(TestCase):
+    def test_edit_link_tag(self):
+        template = """{% load core_tags %}
+                      {% edit_link object %}"""
+        t = Template(template)
+        user = choice(list(User.objects.all()))
+        c = Context({'object': user})
+        self.assertIn('/auth/user/%s/' % user.id, t.render(c))
+
+
