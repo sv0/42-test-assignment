@@ -1,10 +1,11 @@
 from django.conf import LazySettings
+from django.contrib.admin.models import ADDITION, CHANGE, DELETION
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.test import TestCase, Client
 from random import choice
-from models import MyHttpRequest
+from models import MyHttpRequest, ModelChangeEntry
 from management.commands.project_models import get_project_models
 
 TEST_USERNAME = 'fake'
@@ -102,3 +103,15 @@ class TemplateTagTest(TestCase):
 class TestProjectModelsCount(TestCase):
     def test_get_project_models(self):
         self.assertIsNot(list(get_project_models()), [])
+
+
+class TestModelChangeEntry(TestCase):
+    def test_model_change_entry_count(self):
+        entries_before = ModelChangeEntry.objects.filter(
+                            action_flag=DELETION
+                        ).count()
+        User.objects.all().delete()
+        entries_after = ModelChangeEntry.objects.filter(
+                            action_flag=DELETION
+                        ).count()
+        self.assertGreater(entries_after, entries_before)
