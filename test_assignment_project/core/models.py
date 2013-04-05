@@ -12,6 +12,11 @@ ACTION_FLAG_CHOICES = (
     (DELETION, 'DELETION'),
 )
 
+NUM_OF_PRIORITIES = 10
+PRIORITY_CHOICES = tuple([(x, "Priority %s" % str(x+1)) \
+                         for x in range(NUM_OF_PRIORITIES)])
+
+
 
 class Profile(models.Model):
     user = models.ForeignKey(User)
@@ -61,6 +66,9 @@ class MyHttpRequest(models.Model):
     raw_post = models.TextField(blank=True, null=True)
     is_secure = models.BooleanField()
     is_ajax = models.BooleanField()
+    priority = models.SmallIntegerField(_('Priority'),
+                                        choices=PRIORITY_CHOICES,
+                                        default=0)
     objects = MyHttpRequestManager()
 
     def __unicode__(self):
