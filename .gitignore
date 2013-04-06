@@ -43,3 +43,4 @@ nosetests.xml
 
 # Media
 test_assignment_project/media/
+test_assignment_project/static/
