@@ -162,3 +162,7 @@ LOGGING = {
         },
     }
 }
+
+FIXTURE_DIRS = (
+    os.path.join(PROJECT_ROOT, 'core', 'fixtures'),
+)
