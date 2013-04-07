@@ -108,10 +108,8 @@ class TestProjectModelsCount(TestCase):
 class TestModelChangeEntry(TestCase):
     def test_model_change_entry_count(self):
         entries_before = ModelChangeEntry.objects.filter(
-                            action_flag=DELETION
-                        ).count()
+                            action_flag=DELETION).count()
         User.objects.all().delete()
         entries_after = ModelChangeEntry.objects.filter(
-                            action_flag=DELETION
-                        ).count()
+                            action_flag=DELETION).count()
         self.assertGreater(entries_after, entries_before)

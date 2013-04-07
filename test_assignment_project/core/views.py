@@ -23,12 +23,16 @@ def first_requests(request):
     request_list = MyHttpRequest.objects.all()[:limit]
     return {'request_list': request_list, 'limit': limit}
 
+
 @login_required
 def edit_contacts(request):
     user = get_object_or_404(User, pk=2)
     if request.method == 'POST':
-        form = ProfileChangeForm(request.POST, request.FILES,
-                instance=user.get_profile())
+        form = ProfileChangeForm(
+                request.POST,
+                request.FILES,
+                instance=user.get_profile()
+        )
         if form.is_valid():
             form.save()
             if not request.is_ajax():

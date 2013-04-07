@@ -13,9 +13,8 @@ ACTION_FLAG_CHOICES = (
 )
 
 NUM_OF_PRIORITIES = 10
-PRIORITY_CHOICES = tuple([(x, "Priority %s" % str(x+1)) \
+PRIORITY_CHOICES = tuple([(x, "Priority %s" % str(x + 1))
                          for x in range(NUM_OF_PRIORITIES)])
-
 
 
 class Profile(models.Model):
@@ -79,5 +78,7 @@ class ModelChangeEntry(models.Model):
     action_time = models.DateTimeField(_('action time'), auto_now=True)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.TextField(_('object id'), blank=True, null=True)
-    action_flag = models.PositiveSmallIntegerField(_('action flag'),
-                        choices=ACTION_FLAG_CHOICES)
+    action_flag = models.PositiveSmallIntegerField(
+                    _('action flag'),
+                    choices=ACTION_FLAG_CHOICES
+    )
