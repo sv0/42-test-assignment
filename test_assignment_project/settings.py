@@ -67,8 +67,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    ('images', os.path.join(PROJECT_ROOT, 'staticfiles', 'images')),
-    ('css', os.path.join(PROJECT_ROOT, 'staticfiles', 'css')),
+    (os.path.join(PROJECT_ROOT, 'staticfiles')),
 )
 
 
