@@ -11,7 +11,7 @@ class ProfileChangeForm(forms.ModelForm):
     last_name = forms.CharField(max_length=30)
     email = forms.EmailField(max_length=30)
     date_of_birth = forms.DateField(widget=CalendarInput())
-    photo = forms.FileField(widget=ProfilePhotoInput(
+    photo = forms.FileField(required=False, widget=ProfilePhotoInput(
                 attrs={'onchange': 'readImage(this)'}
             )
     )
