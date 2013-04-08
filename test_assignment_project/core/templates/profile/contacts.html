@@ -5,7 +5,7 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
+{% if request.user.is_authenticated %}
     <div class="pull-right">
         <a href="{% url edit_contacts %}">{% trans "Change" %}</a> 
         <a href="{% edit_link user.get_profile %}">(admin)</a> 

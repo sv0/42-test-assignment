@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
-from django.forms.widgets import DateInput
-
+from django.conf import settings
+from django.forms.widgets import DateInput, ClearableFileInput
+#from django.utils.safestring import mark_safe
 
 class CalendarInput(DateInput):
     class Media:
@@ -10,3 +11,8 @@ class CalendarInput(DateInput):
         js = ('http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
               'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js',
               'http://malsup.github.com/jquery.form.js',)
+
+
+class ProfilePhotoInput(ClearableFileInput):
+    class Media:
+        js = ('profile/filereader.js',)
