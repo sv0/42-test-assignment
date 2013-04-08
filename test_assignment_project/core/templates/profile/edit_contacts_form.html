@@ -48,11 +48,9 @@
     </div>
 
     <div class="control-group">
-    {% if user.get_profile.photo %}
         <div class="controls">
-            <img src="{{user.get_profile.photo.url}}" class="img-polaroid">
+            <img id="profile_photo" src="{% if user.get_profile.photo %}{{ user.get_profile.photo.url }}{% endif %}" class="img-polaroid" alt="profile photo">
         </div>
-    {%  endif  %}
     </div>
 
     <div class="control-group">
