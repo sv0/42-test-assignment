@@ -1,15 +1,20 @@
 #-*- coding: utf-8 -*-
 from django.contrib.auth.forms import User
+#from django.forms.widgets import ClearableFileInput, FileInput
 from django import forms
 from models import Profile
-from widgets import CalendarInput
+from widgets import CalendarInput, ProfilePhotoInput
 
 
 class ProfileChangeForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
     email = forms.EmailField(max_length=30)
-    date_of_birth = forms.DateField(widget=CalendarInput)
+    date_of_birth = forms.DateField(widget=CalendarInput())
+    photo = forms.FileField(widget=ProfilePhotoInput(
+                attrs={'onchange': 'readImage(this)'}
+            )
+    )
 
     def save(self, *args, **kwargs):
         cd = self.cleaned_data
@@ -25,4 +30,4 @@ class ProfileChangeForm(forms.ModelForm):
         exclude = ('user', )
 
     class Media:
-        js = ('profile/edit_contacts.js',)
+        js = ('profile/edit_contacts.js', )
