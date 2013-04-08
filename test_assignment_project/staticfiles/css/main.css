@@ -11,3 +11,7 @@ ul.errorlist {
 .errorlist li {
     color: red;
 }
+
+#profile_photo {
+    max-width: 300px;
+}
