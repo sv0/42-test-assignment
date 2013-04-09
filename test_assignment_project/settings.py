@@ -165,3 +165,6 @@ LOGGING = {
 FIXTURE_DIRS = (
     os.path.join(PROJECT_ROOT, 'core', 'fixtures'),
 )
+
+if os.path.exists(os.path.join(PROJECT_ROOT, 'settings_local.py')):
+    from settings_local import *

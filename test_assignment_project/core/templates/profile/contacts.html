@@ -5,7 +5,7 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
+{% if request.user.is_authenticated %}
     <div class="pull-right">
         <a href="{% url edit_contacts %}">{% trans "Change" %}</a> 
         <a href="{% edit_link user.get_profile %}">(admin)</a> 
@@ -18,7 +18,7 @@
         <p>Last name: {{user.last_name}}</p>
         <p>Date of birth: {{user.get_profile.date_of_birth}}</p>
         {% if user.get_profile.photo %}
-            <img src="{{user.get_profile.photo.url}}" alt="photo" class="img-polaroid">
+            <img src="{{user.get_profile.photo.url}}" id="profile_photo" alt="photo" class="img-polaroid">
         {% endif %}
     </div>
     <div class="span6">

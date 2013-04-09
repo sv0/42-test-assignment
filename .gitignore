@@ -37,6 +37,7 @@ nosetests.xml
 .pydevproject
 .env/
 *.dat
+test_assignment_project/settings_local.py
 
 # Database
 *.sqlit*
