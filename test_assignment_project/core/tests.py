@@ -6,6 +6,7 @@ from django.template import Template, Context
 from django.test import TestCase, Client
 from random import choice
 from models import MyHttpRequest, ModelChangeEntry
+from forms import ProfileChangeForm
 from management.commands.project_models import get_project_models
 
 TEST_USERNAME = 'fake'
@@ -113,3 +114,17 @@ class TestModelChangeEntry(TestCase):
         entries_after = ModelChangeEntry.objects.filter(
                             action_flag=DELETION).count()
         self.assertGreater(entries_after, entries_before)
+
+
+class TestProfileChangeForm(TestCase):
+    def test_profile_change_form_good(self):
+        user = User.objects.get(pk=2)
+        form = ProfileChangeForm(TEST_FORM_DATA, instance=user)
+        self.assertTrue(form.is_valid())
+
+    def test_profile_change_form_bad(self):
+        user = choice(list(User.objects.all()))
+        form = ProfileChangeForm({'first_name': 'fake',
+                                  'last_name': u'fake'},
+                                  instance=user)
+        self.assertFalse(form.is_valid())
