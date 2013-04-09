@@ -24,11 +24,6 @@
 
     <div class="control-group{%if form.date_of_birth.errors %} error{% endif %}">
         <label for="id_{{form.date_of_birth.name}}" class="control-label">
-        <script>
-            $(function() {
-                $( "#id_{{form.date_of_birth.name}}" ).datepicker({showButtonPanel: true});
-            });
-        </script>
             {{form.date_of_birth.label}}:
         </label>
         <div class="controls">
