@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load i18n %}
-{# load core_tags #}
+{% load core_tags %}
 {% block title %}{{user}}'s contacts{% endblock %}
 
 {% block content %}
 
-{% if user.is_authenticated %}
-    <div class="pull-left">
+{% if request.user.is_authenticated %}
+    <div class="pull-right">
         <a href="{% url edit_contacts %}">{% trans "Change" %}</a> 
-        {# <a href="{% edit_link user.get_profile %}">(admin)</a> #}
+        <a href="{% edit_link user.get_profile %}">(admin)</a> 
     </div>
 {% endif %}
 
@@ -18,7 +18,7 @@
         <p>Last name: {{user.last_name}}</p>
         <p>Date of birth: {{user.get_profile.date_of_birth}}</p>
         {% if user.get_profile.photo %}
-            <img src="{{user.get_profile.photo.url}}" class="img-polaroid">
+            <img src="{{user.get_profile.photo.url}}" id="profile_photo" alt="photo" class="img-polaroid">
         {% endif %}
     </div>
     <div class="span6">
@@ -26,11 +26,10 @@
         <p>Email: {{user.email}}</p>
         <p>Jabber: {{user.get_profile.jabber}}</p>
         <p>Skype: {{user.get_profile.skype}}</p>
-        <p>Other contacts: <pre>{{user.get_profile.other_contacts}}</pre></p>
-        <p>
-            Bio:<br />
-            {{user.get_profile.bio}}
-        </p>
+        <p>Other contacts: </p>
+        <pre>{{user.get_profile.other_contacts}}</pre>
+        <p>Bio:</p>
+        <p>{{user.get_profile.bio}}</p>
     </div>
 </div>
 {% endblock %}

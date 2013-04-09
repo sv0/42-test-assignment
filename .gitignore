@@ -36,9 +36,12 @@ nosetests.xml
 .project
 .pydevproject
 .env/
+*.dat
+test_assignment_project/settings_local.py
 
 # Database
 *.sqlit*
 
 # Media
 test_assignment_project/media/
+test_assignment_project/static/

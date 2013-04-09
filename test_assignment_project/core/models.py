@@ -1,8 +1,20 @@
 #-*- coding: utf-8 -*-
+from django.contrib.admin.models import ADDITION, CHANGE, DELETION
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import signals
+
+ACTION_FLAG_CHOICES = (
+    (ADDITION, 'ADDITION'),
+    (CHANGE, 'CHANGE'),
+    (DELETION, 'DELETION'),
+)
+
+NUM_OF_PRIORITIES = 10
+PRIORITY_CHOICES = tuple([(x, "Priority %s" % str(x + 1))
+                         for x in range(NUM_OF_PRIORITIES)])
 
 
 class Profile(models.Model):
@@ -53,7 +65,20 @@ class MyHttpRequest(models.Model):
     raw_post = models.TextField(blank=True, null=True)
     is_secure = models.BooleanField()
     is_ajax = models.BooleanField()
+    priority = models.SmallIntegerField(_('Priority'),
+                                        choices=PRIORITY_CHOICES,
+                                        default=0)
     objects = MyHttpRequestManager()
 
     def __unicode__(self):
         return u"%s%s" % (self.host, self.path)
+
+
+class ModelChangeEntry(models.Model):
+    action_time = models.DateTimeField(_('action time'), auto_now=True)
+    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    object_id = models.TextField(_('object id'), blank=True, null=True)
+    action_flag = models.PositiveSmallIntegerField(
+                    _('action flag'),
+                    choices=ACTION_FLAG_CHOICES
+    )

@@ -14,7 +14,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '42_test_assignment.sqlite3',
+        'NAME': 'test_assignment.sqlite3',
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -67,8 +67,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    ('images', os.path.join(PROJECT_ROOT, 'images')),
-    ('css', os.path.join(PROJECT_ROOT, 'css')),
+    (os.path.join(PROJECT_ROOT, 'staticfiles')),
 )
 
 
@@ -162,3 +161,10 @@ LOGGING = {
         },
     }
 }
+
+FIXTURE_DIRS = (
+    os.path.join(PROJECT_ROOT, 'core', 'fixtures'),
+)
+
+if os.path.exists(os.path.join(PROJECT_ROOT, 'settings_local.py')):
+    from settings_local import *
