@@ -6,10 +6,13 @@ body {
 ul.errorlist {
     margin: 0;
     padding: 0;
+    width:100%;
+    list-style-type: none;
 }
 
 .errorlist li {
     color: red;
+    font-weight: bold;
 }
 
 #profile_photo {
