@@ -90,12 +90,17 @@ class MyHttpRequestTest(TestCase):
 
 
 class TemplateTagTest(TestCase):
+    def setUp(self):
+        template = "{% load core_tags %}{% edit_link obj %}"
+        self.template = Template(template)
+
     def test_edit_link_tag(self):
-        template = """{% load core_tags %}
-                      {% edit_link object %}"""
-        t = Template(template)
         user = choice(list(User.objects.all()))
-        c = Context({'object': user})
-        self.assertIn('/auth/user/%s/' % user.id, t.render(c))
+        c = Context({'obj': user})
+        self.assertIn('/auth/user/%s/' % user.id, self.template.render(c))
 
-
+    def test_edit_link_tag_not_django_model(self):
+        # choice random object from the list
+        obj = choice((u'unicode string', 100500, LazySettings()))
+        c = Context({'obj': obj})
+        self.assertEqual('', self.template.render(c))
