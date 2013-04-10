@@ -98,8 +98,14 @@ class TemplateTagTest(TestCase):
 
     def test_edit_link_tag(self):
         user = choice(list(User.objects.all()))
-        c = Context({'object': user})
-        self.assertIn('/auth/user/%s/' % user.id, t.render(c))
+        c = Context({'obj': user})
+        self.assertIn('/auth/user/%s/' % user.id, self.template.render(c))
+
+    def test_edit_link_tag_not_django_model(self):
+        # choice random object from the list
+        obj = choice((u'unicode string', 100500, LazySettings()))
+        c = Context({'obj': obj})
+        self.assertEqual('', self.template.render(c))
 
 
 class TestProjectModelsCount(TestCase):
@@ -129,11 +135,4 @@ class TestProfileChangeForm(TestCase):
                                   'last_name': u'fake'},
                                   instance=user)
         self.assertFalse(form.is_valid())
-        c = Context({'obj': user})
-        self.assertIn('/auth/user/%s/' % user.id, self.template.render(c))
 
-    def test_edit_link_tag_not_django_model(self):
-        # choice random object from the list
-        obj = choice((u'unicode string', 100500, LazySettings()))
-        c = Context({'obj': obj})
-        self.assertEqual('', self.template.render(c))
