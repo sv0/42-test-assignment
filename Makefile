@@ -1,5 +1,6 @@
 MANAGE=django-admin.py
 PROJECT=test_assignment_project
+VIRTUALENV_DIR=.env
 
 clean:
 	rm -rf build
@@ -29,3 +30,13 @@ pep8:
 pylint:
 	pylint $(PROJECT)  --max-public-methods=50 --include-ids=y --ignored-classes=Item.Meta --method-rgx='[a-z_][a-z0-9_]{2,40}$$'
 
+BATS_REPO=https://github.com/sstephenson/bats.git
+install_bats:
+	if test -f $(VIRTUALENV_DIR)/libexec/bats; then true; \
+		else rm -fr tmp; \
+			git clone $(BATS_REPO) tmp; \
+			exec tmp/install.sh $(VIRTUALENV_DIR); \
+	fi;
+
+test_shell_scripts: install_bats
+	$(VIRTUALENV_DIR)/libexec/bats project_models_test.bats
