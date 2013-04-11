@@ -1,6 +1,7 @@
 from django.conf import LazySettings
 from django.contrib.admin.models import ADDITION, CHANGE, DELETION
 from django.contrib.auth.models import User
+from django.core import management
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.test import TestCase, Client
@@ -8,6 +9,9 @@ from random import choice
 from models import MyHttpRequest, ModelChangeEntry
 from forms import ProfileChangeForm
 from management.commands.project_models import get_project_models
+from cStringIO import StringIO
+import sys
+
 
 TEST_USERNAME = 'fake'
 TEST_PASSWORD = 'fake'
@@ -109,8 +113,24 @@ class TemplateTagTest(TestCase):
 
 
 class TestProjectModelsCount(TestCase):
+    def setUp(self):
+        sys.stdout = StringIO()
+        sys.stderr = StringIO()
+        self.random_project_model_name = choice(list(get_project_models()))[0]
+
     def test_get_project_models(self):
         self.assertIsNot(list(get_project_models()), [])
+
+    def test_project_models_stdout(self):
+        management.call_command('project_models')
+        out = sys.stdout.getvalue()
+        self.assertIn(self.random_project_model_name, out)
+
+    def test_project_models_stderr(self):
+        management.call_command('project_models')
+        err = sys.stderr.getvalue()
+        self.assertIn("error: %s" % self.random_project_model_name, err)
+
 
 
 class TestModelChangeEntry(TestCase):
