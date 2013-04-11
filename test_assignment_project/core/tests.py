@@ -132,7 +132,6 @@ class TestProjectModelsCount(TestCase):
         self.assertIn("error: %s" % self.random_project_model_name, err)
 
 
-
 class TestModelChangeEntry(TestCase):
     def test_model_change_entry_count(self):
         entries_before = ModelChangeEntry.objects.filter(
@@ -155,4 +154,3 @@ class TestProfileChangeForm(TestCase):
                                   'last_name': u'fake'},
                                   instance=user)
         self.assertFalse(form.is_valid())
-
