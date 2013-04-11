@@ -8,7 +8,9 @@ clean:
 	rm -f *.sqlite3
 	find . -name '*.pyc' -exec rm {} \;
 
-test:
+test: test_core_app test_shell_scripts
+
+test_core_app:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) test core
 
 run:
