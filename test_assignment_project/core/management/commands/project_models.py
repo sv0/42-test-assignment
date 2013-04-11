@@ -11,7 +11,7 @@ def get_project_models():
 
 
 class Command(BaseCommand):
-    help = "Shows models and counts them objecs"
+    help = "Shows models and count theirs objects"
 
     def handle(self, *args, **options):
         for class_name, obj_count in get_project_models():
