@@ -9,6 +9,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 class MyHttpRequestAdmin(admin.ModelAdmin):
     list_display = ('id', 'host', 'path', 'priority')
+    list_editable = ('priority',)
 
 
 class ModelChangeEntryAdmin(admin.ModelAdmin):
