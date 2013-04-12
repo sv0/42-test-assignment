@@ -6,6 +6,7 @@ from django.template import Template, Context
 from django.test import TestCase, Client
 from random import choice
 from models import MyHttpRequest, ModelChangeEntry
+from forms import ProfileChangeForm
 from management.commands.project_models import get_project_models
 
 TEST_USERNAME = 'fake'
@@ -91,13 +92,20 @@ class MyHttpRequestTest(TestCase):
 
 
 class TemplateTagTest(TestCase):
+    def setUp(self):
+        template = "{% load core_tags %}{% edit_link obj %}"
+        self.template = Template(template)
+
     def test_edit_link_tag(self):
-        template = """{% load core_tags %}
-                      {% edit_link object %}"""
-        t = Template(template)
         user = choice(list(User.objects.all()))
-        c = Context({'object': user})
-        self.assertIn('/auth/user/%s/' % user.id, t.render(c))
+        c = Context({'obj': user})
+        self.assertIn('/auth/user/%s/' % user.id, self.template.render(c))
+
+    def test_edit_link_tag_not_django_model(self):
+        # choice random object from the list
+        obj = choice((u'unicode string', 100500, LazySettings()))
+        c = Context({'obj': obj})
+        self.assertEqual('', self.template.render(c))
 
 
 class TestProjectModelsCount(TestCase):
@@ -108,10 +116,23 @@ class TestProjectModelsCount(TestCase):
 class TestModelChangeEntry(TestCase):
     def test_model_change_entry_count(self):
         entries_before = ModelChangeEntry.objects.filter(
-                            action_flag=DELETION
-                        ).count()
+                            action_flag=DELETION).count()
         User.objects.all().delete()
         entries_after = ModelChangeEntry.objects.filter(
-                            action_flag=DELETION
-                        ).count()
+                            action_flag=DELETION).count()
         self.assertGreater(entries_after, entries_before)
+
+
+class TestProfileChangeForm(TestCase):
+    def test_profile_change_form_good(self):
+        user = User.objects.get(pk=2)
+        form = ProfileChangeForm(TEST_FORM_DATA, instance=user)
+        self.assertTrue(form.is_valid())
+
+    def test_profile_change_form_bad(self):
+        user = choice(list(User.objects.all()))
+        form = ProfileChangeForm({'first_name': 'fake',
+                                  'last_name': u'fake'},
+                                  instance=user)
+        self.assertFalse(form.is_valid())
+

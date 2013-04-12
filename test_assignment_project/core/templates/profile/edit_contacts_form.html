@@ -3,107 +3,104 @@
 {% csrf_token %}    
 <div class="span6">
     <div class="control-group{%if form.first_name.errors %} error{% endif %}">
-        {{ form.first_name.errors }}
         <label for="id_{{form.first_name.name}}" class="control-label">
             {{form.first_name.label}}:
         </label>
         <div class="controls">
+            {{ form.first_name.errors }}
             {{ form.first_name }}
         </div>
     </div>
 
     <div class="control-group{%if form.last_name.errors %} error{% endif %}">
-        {{ form.last_name.errors }}
         <label for="id_{{form.last_name.name}}" class="control-label">
             {{form.last_name.label}}:
         </label>
         <div class="controls">
+            {{ form.last_name.errors }}
             {{ form.last_name }}
         </div>
     </div>
 
     <div class="control-group{%if form.date_of_birth.errors %} error{% endif %}">
-        {{ form.date_of_birth.errors }}
         <label for="id_{{form.date_of_birth.name}}" class="control-label">
-        <script>
-            $(function() {
-                $( "#id_{{form.date_of_birth.name}}" ).datepicker({showButtonPanel: true});
-            });
-        </script>
             {{form.date_of_birth.label}}:
         </label>
         <div class="controls">
+            {{ form.date_of_birth.errors }}
             {{ form.date_of_birth }}
         </div>
     </div>
 
     <div class="control-group{%if form.photo.errors %} error{% endif %}">
-        {{ form.photo.errors }}
         <label for="id_{{form.photo.name}}" class="control-label">
             {{form.photo.label}}:
         </label>
         <div class="controls">
+            {{ form.photo.errors }}
             {{ form.photo }}
         </div>
     </div>
 
     <div class="control-group">
-    {% if user.get_profile.photo %}
         <div class="controls">
-            <img src="{{user.get_profile.photo.url}}" class="img-polaroid">
+            <img id="profile_photo" src="{% if user.get_profile.photo %}{{ user.get_profile.photo.url }}{% endif %}" class="img-polaroid" alt="profile photo">
         </div>
-    {%  endif  %}
     </div>
 
-    <p id="id_message_holder"></p>
-    <input type="submit" value="{% trans "Save" %}"> 
-    <a href="{% url home %}">{% trans "Cancel" %}</a>
-    <img id="id_ajax_loader" src="{{STATIC_URL}}images/ajax_loader_gray_48.gif" style="display: none;">
+    <div class="control-group">
+        <div class="controls">
+            <p id="id_message_holder"></p>
+            <input type="submit" class="btn btn-primary" value="{% trans "Save" %}"> 
+            <a href="{% url home %}">{% trans "Cancel" %}</a>
+            <img id="id_ajax_loader" src="{{STATIC_URL}}images/ajax_loader_gray_48.gif" style="display: none;">
+        </div>
+    </div>
 
 </div>
 <div class="span6">
     <div class="control-group{%if form.email.errors %} error{% endif %}">
-        {{ form.email.errors }}
         <label for="id_{{form.email.name}}" class="control-label">
             {{form.email.label}}:
         </label>
         <div class="controls">
+            {{ form.email.errors }}
             {{ form.email }}
         </div>
     </div>
     <div class="control-group{%if form.skype.errors %} error{% endif %}">
-        {{ form.skype.errors }}
         <label for="id_{{form.skype.name}}" class="control-label">
             {{form.skype.label}}:
         </label>
         <div class="controls">
+            {{ form.skype.errors }}
             {{ form.skype }}
         </div>
     </div>
     <div class="control-group{%if form.jabber.errors %} error{% endif %}">
-        {{ form.jabber.errors }}
         <label for="id_{{form.jabber.name}}" class="control-label">
             {{form.jabber.label}}:
         </label>
         <div class="controls">
+            {{ form.jabber.errors }}
             {{ form.jabber }}
         </div>
     </div>
     <div class="control-group">
-        {{ form.other_contacts.errors }}
         <label for="id_{{form.other_contacts.name}}" class="control-label">
             {{form.other_contacts.label}}:
         </label>
         <div class="controls">
+            {{ form.other_contacts.errors }}
             {{ form.other_contacts }}
         </div>
     </div>
     <div class="control-group">
-        {{ form.bio.errors }}
         <label for="id_{{form.bio.name}}" class="control-label">
             {{form.bio.label}}:
         </label>
         <div class="controls">
+            {{ form.bio.errors }}
             {{ form.bio }}
         </div>
     </div>

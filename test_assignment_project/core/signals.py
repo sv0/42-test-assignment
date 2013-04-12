@@ -11,9 +11,9 @@ def model_change_logger(sender, action_flag, **kwargs):
         return
     try:
         ModelChangeEntry.objects.create(
-            content_type_id = ContentType.objects.get_for_model(sender).pk,
-            object_id       = sender.pk,
-            action_flag     = action_flag,
+                content_type_id=ContentType.objects.get_for_model(sender).pk,
+                object_id=sender.pk,
+                action_flag=action_flag,
         )
     except:
         # no such table
