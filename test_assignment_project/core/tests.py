@@ -131,10 +131,13 @@ class TestModelChangeEntry(TestCase):
         self.assertEqual(entries_diference, 1)
 
     def test_model_change_entry_action_flag_and_content_type(self):
-        User.objects.create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
+        user = User.objects.create_user(TEST_USERNAME,
+                                        TEST_EMAIL,
+                                        TEST_PASSWORD)
         latest_entry = ModelChangeEntry.objects.latest('id')
         self.assertEqual(latest_entry.action_flag, ADDITION)
         self.assertEqual(latest_entry.content_type, self.user_content_type)
+        self.assertEqual(latest_entry.object_id, user.id)
 
 
 class TestProfileChangeForm(TestCase):
