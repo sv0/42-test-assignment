@@ -95,6 +95,9 @@ class MyHttpRequestTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'List of the first')
 
+    def test_order_requests_by_priority(self):
+        self.skipTest("have no idea how to do it")
+
 
 class TemplateTagTest(TestCase):
     def setUp(self):

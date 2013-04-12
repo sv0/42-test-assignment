@@ -2,9 +2,26 @@
 
 {% block content %}
 <h2>List of the first {{limit}} requests</h2>
-<ul>
+
+
+<table class="table table-bordered">
+  <caption>List of the first {{limit}} requests</caption>
+  <thead>
+    <tr>
+      <th>Request</th>
+      <th>Priority</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for r in request_list %}
-        <li>{{r}}</li>
+       <tr>
+           <td>{{ r }}</td>
+           <td>{{ r.get_priority_display }}</td>
+           <td>{{ r.created }}</td>
+       </tr>
     {% endfor %}
-</ul>
+  </tbody>
+</table>
+
 {% endblock %}
