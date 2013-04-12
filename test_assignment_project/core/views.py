@@ -20,7 +20,7 @@ def home(request):
 @render_to("my_http_request/first_requests.html")
 def first_requests(request):
     limit = 10
-    request_list = MyHttpRequest.objects.all()[:limit]
+    request_list = MyHttpRequest.objects.order_by('priority')[:limit]
     return {'request_list': request_list, 'limit': limit}
 
 
