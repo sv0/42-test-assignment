@@ -7,7 +7,7 @@ def model_change_logger(sender, action_flag, **kwargs):
     """
         Log that an object has been created or changed or deleted.
     """
-    if sender._meta == ModelChangeEntry._meta:
+    if sender == ModelChangeEntry:
         return
     try:
         ModelChangeEntry.objects.create(
