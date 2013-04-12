@@ -1,6 +1,7 @@
 from django.conf import LazySettings
 from django.contrib.admin.models import ADDITION, CHANGE, DELETION
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.test import TestCase, Client
@@ -114,13 +115,29 @@ class TestProjectModelsCount(TestCase):
 
 
 class TestModelChangeEntry(TestCase):
-    def test_model_change_entry_count(self):
+    def setUp(self):
+        self.user_content_type=ContentType.objects.get_for_model(User)
+
+    def test_model_change_entry_delete(self):
         entries_before = ModelChangeEntry.objects.filter(
-                            action_flag=DELETION).count()
-        User.objects.all().delete()
+                            action_flag=DELETION,
+                            content_type=self.user_content_type
+                         ).count()
+        # delete the first user
+        User.objects.all()[0].delete()
         entries_after = ModelChangeEntry.objects.filter(
                             action_flag=DELETION).count()
-        self.assertGreater(entries_after, entries_before)
+        entries_diference = entries_after - entries_before
+        self.assertEqual(entries_diference, 1)
+
+    def test_model_change_entry_action_flag_and_content_type(self):
+        user = User.objects.create_user(TEST_USERNAME,
+                                        TEST_EMAIL,
+                                        TEST_PASSWORD)
+        latest_entry = ModelChangeEntry.objects.latest('id')
+        self.assertEqual(latest_entry.action_flag, ADDITION)
+        self.assertEqual(latest_entry.content_type, self.user_content_type)
+        self.assertEqual(latest_entry.object_id, user.id)
 
 
 class TestProfileChangeForm(TestCase):

@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('action_time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'], null=True, blank=True)),
-            ('object_id', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_id', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True, blank=True)),
             ('action_flag', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
         ))
         db.send_create_signal('core', ['ModelChangeEntry'])
