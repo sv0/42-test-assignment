@@ -74,6 +74,23 @@ class ContactTest(TestCase):
         self.test_post_contacts_form_auth(is_ajax=True)
 
 
+def create_request():
+    MyHttpRequest.objects.create(
+        host='test.com',
+        path='/path/',
+        method='GET',
+        remote_addr='8.8.8.8',
+        is_secure=False,
+        is_ajax=False,
+        priority=choice(range(10))
+    )
+
+
+def create_bunch_of_requests(number=10):
+    for i in range(number):
+        create_request()
+
+
 class MyHttpRequestTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -94,9 +111,18 @@ class MyHttpRequestTest(TestCase):
         response = self.client.get(reverse('first_requests'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'List of the first')
+        self.assertIsNot(response.context['request_list'], None)
 
     def test_order_requests_by_priority(self):
-        self.skipTest("have no idea how to do it")
+        for n in range(3):
+            create_bunch_of_requests(n)
+            response = self.client.get(reverse('first_requests'))
+            context_request_list = response.context['request_list']
+            request_priorities = [r.priority for r in
+                    MyHttpRequest.objects.order_by('priority')[:10]]
+            request_priorities_sorted = request_priorities[:]
+            request_priorities_sorted.sort()
+            self.assertEqual(request_priorities, request_priorities_sorted)
 
 
 class TemplateTagTest(TestCase):
